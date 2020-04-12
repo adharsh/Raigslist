@@ -1,0 +1,139 @@
+/****************
+      GLOBAL 
+*****************/
+
+@import url('https://fonts.googleapis.com/css?family=Montserrat:400,700,900');
+body {
+    font-family: 'Montserrat', sans-serif;
+}
+
+.container {
+    width: 80%;
+    margin: 0 auto;
+}
+
+img {
+    /* object-fit: contain; */
+    /* object-fit: cover; */
+    display: block;
+    /* max-height:100%; */
+    width: 100%;
+    max-width: 100%;
+}
+
+/****************
+      MAIN 
+*****************/
+
+h1 {
+    font-weight: 700;
+}
+
+article {
+    padding: 10px;
+    background-color: #ecf0f1;
+    margin-bottom: 30px;
+}
+
+.nav {
+    padding: 10px;
+    background-color: #2c3e50;
+    display: inline;
+    /* font-weight: bold; */
+}
+
+.nav a {
+    color: white;
+}
+
+/****************
+      FORM 
+*****************/
+
+.input-field {
+    padding: 10px 0;
+}
+
+label {
+    display: block;
+    padding-bottom: 10px;
+}
+
+input {
+    padding: 10px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+textarea {
+    padding: 10px;
+    font-size: 20px;
+    font-weight: bold;
+    width: 80%;
+}
+
+button {
+    border: none;
+    padding: 10px;
+    background-color: #3e5872;
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+/****************
+      POST 
+*****************/
+
+.title-container {
+    text-align: center;
+    padding: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    width: 40%;
+    max-height: 100%;
+    max-width: 100%;
+    /* height: 80%; */
+}
+
+.title {
+    display: inline;
+    margin-right: 20px;
+}
+
+.content {
+    padding: 20px;
+    width: 60%;
+    margin: 0 auto;
+    background-color: #2c3e50;
+    color: white;
+}
+
+.content a {
+    color: white;
+}
+
+#input {
+    margin: 30px 0px 0px -20px;
+}
+
+#ad_container_ {
+    margin: 20px 0px;
+}
+
+.column {
+    float: left;
+    width: 33.33%;
+    /* padding: 10px; */
+}
+
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+#description_container {
+    padding: 10px 0 10% 0;
+}

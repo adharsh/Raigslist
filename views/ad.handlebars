@@ -1,0 +1,54 @@
+<div class="title-container">
+    <h1 class="">{{this.title}} <br /> ${{this.price}}</h1>
+    <i>{{this.display_date}}</i>
+
+    {{#each this.images}}
+    <img class="mySlides" src={{this}}>
+    {{/each}}
+
+    <button class="slide_button" onclick="plusDivs(-1)">&#10094;</button>
+    <button class="slide_button" onclick="plusDivs(1)">&#10095;</button>
+</div>
+
+
+<div class="content">
+    <div class="row">
+        <div class="column">{{{this.name}}}</div>
+        <div class="column">{{{this.contact}}}</div>
+        <div class="column">{{{this.location}}}</div>
+    </div>
+    <hr />
+    <div id="description_container">
+        {{{this.description}}}
+    </div>
+</div>
+
+
+<script>
+    if ($(".mySlides").toArray().length == 1) {
+        console.log($(".mySlides").toArray())
+        $(".slide_button").each(function (i, ele) {
+            //console.log()
+            ele.style.display = "none";
+        });
+    }
+
+    var slideIndex = 1;
+    showDivs(slideIndex);
+
+    function plusDivs(n) {
+        showDivs(slideIndex += n);
+    }
+
+    function showDivs(n) {
+        var images = $("mySlides").toArray();
+
+        var x = document.getElementsByClassName("mySlides");
+        if (n > x.length) { slideIndex = 1 }
+        if (n < 1) { slideIndex = x.length }
+        for (var i = 0; i < x.length; i++) {
+            x[i].style.display = "none";
+        }
+        x[slideIndex - 1].style.display = "block";
+    }
+</script>

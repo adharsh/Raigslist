@@ -1,0 +1,83 @@
+{
+    "ads": [
+        {
+            "title": "Leftover Lo Mein",
+            "date": 20200410,
+            "display_date": "Apr 10th, 2020",
+            "description": "This bad boy filled me up last night, the rest is yours. Also might give complementary nachos if you come soon.",
+            "preview": "This bad boy filled me up last night, the rest is",
+            "price": 19.99,
+            "location": "Washington D.C.",
+            "images": [
+                "https://s3-media0.fl.yelpcdn.com/bphoto/MrA0wxEQvORj3TZGorsXJA/348s.jpg",
+                "https://i.redd.it/ber40dyn4be01.jpg"
+            ],
+            "name": "Frank Ledude",
+            "contact": "chad@scam.edu",
+            "id": 1
+        },
+        {
+            "title": "Selling dumbbells and barbell",
+            "date": 20200409,
+            "display_date": "Apr 9th, 2020",
+            "description": "Top quality condition",
+            "preview": "Top quality condition",
+            "price": 199.99,
+            "location": "Fairfax County, Virginia",
+            "images": [
+                "https://cdn11.bigcommerce.com/s-io402ligck/images/stencil/1280x1280/products/100/577/862061__90422.1463678586.jpg",
+                "https://www.ironcompany.com/media/catalog/product/cache/6e8e24cc73e2eff11526e72b5f24c033/c/a/cap-barbell-rb-60t-threaded-bar.jpg"
+            ],
+            "name": "Big Bob",
+            "contact": "bluesclues@fake.com",
+            "id": 2
+        },
+        {
+            "title": "College Textbook",
+            "date": 20200408,
+            "display_date": "Apr 8th, 2020",
+            "description": "Used condition, dog bit front cover and there's mustard stains on the last page",
+            "preview": "Used condition, dog bit front cover and there's mu",
+            "price": 29.99,
+            "location": "College Park, Maryland",
+            "images": [
+                "https://di2ponv0v5otw.cloudfront.net/posts/2018/08/10/5b6e1e663e0caa1a7a5cd733/m_5b6e1e7e34e48a21635800f6.jpg"
+            ],
+            "name": "Yoda",
+            "contact": "987-555-4311",
+            "id": 3
+        },
+        {
+            "title": "Tennis Racquet",
+            "price": 1000.01,
+            "images": [
+                "https://tennishead.net/wp-content/uploads/2018/10/530b6ecc8c919.jpg"
+            ],
+            "location": "Basel, Switzerland",
+            "name": "Roger Federer",
+            "contact": "789-555-1234",
+            "description": "Used condition, won the the Wimbledon with this",
+            "preview": "Used condition, won the the Wimbledon with this",
+            "date": 20200407,
+            "display_date": "Apr 7th, 2020",
+            "id": 4
+        },
+        {
+            "title": "title",
+            "price": "234.19",
+            "images": [
+                "https://via.placeholder.com/300x100",
+                "https://via.placeholder.com/100x300",
+                "https://via.placeholder.com/10x10"
+            ],
+            "location": "location",
+            "name": "name",
+            "contact": "contact",
+            "description": "<p>description</p>\n",
+            "id": 5,
+            "preview": "<p>description</p>\n",
+            "date": 20200411,
+            "display_date": "Apr 11th, 2020"
+        }
+    ]
+}

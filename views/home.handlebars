@@ -1,0 +1,63 @@
+
+<script>
+    $(document).ready(function () {
+        $('#no_results').hide();
+    });
+</script>
+
+
+{{#if search}}
+
+<input id="input" type="text" placeholder="Search Query">
+
+<script>
+
+    $("#input").on("keyup", function (event) {
+        var base_str = $("#input").val().trim();
+        var num_block = 0;
+        $('.ad').each(function (i, ele) {
+            //if (ele.children[0].innerText.toUpperCase().includes(base_str.toUpperCase())) {
+            if ($(this).children("h2")[0].innerText.toUpperCase().includes(base_str.toUpperCase())) {
+                $(this).show();
+                num_block++;
+            } else {
+                
+                $(this).hide();
+            }
+        });
+
+        if (num_block == 0) {
+            $('#no_results').css("display", "block");
+        } else {
+            $('#no_results').css("display", "none");
+        }
+    })
+
+</script>
+
+{{/if}}
+
+<div id="ad_container_">
+
+    <article id="no_results">
+        <h1>No results found!</h1>
+    </article>
+
+    {{#each ads}}
+    <article class="ad" id={{this.id}}>
+        <h2 class="title">{{this.title}} - ${{this.price}}</h2> <i>{{this.display_date}}</i>
+        <hr>
+        <div class="content">
+            {{{this.preview}}}...
+        </div>
+        <a href="/ad/{{this.id}}">Read more...</a>
+    </article>
+    {{else}}
+
+    <article class=>
+        <h1>There are no advertisements yet. :(</h1>
+        <a href="/create">Create your first advertisement!</a>
+    </article>
+    {{/each}}
+
+</div>

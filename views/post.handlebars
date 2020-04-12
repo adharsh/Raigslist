@@ -1,0 +1,53 @@
+{{!-- 
+This html itself is creating the post request, no need to handle button clicks.
+action has endpoint
+method is request type
+name is used to access req.body.title for ex
+type is the type of field it is
+
+ --}}
+
+<script>
+    $(document).ready(function () {
+        $("#price").change(function() {
+            $(this).val(parseFloat($(this).val()).toFixed(2));
+        });
+    });
+    
+</script>
+
+<h1>Post New Advertisement</h1>
+<article>
+    <form method="POST" action="/post">
+        <div class="input-field">
+            <label>Title:</label>
+            <input type="text" name="title" size="50" placeholder="Title..." required/>
+        </div>
+        <div class="input-field">
+            <label>Price:</label>
+            <input id="price" type="number" name="price" size="50" step="0.01" placeholder="999.99" min="0" max="1000000000" required/>
+        </div>
+        <div class="input-field">
+            <label>Images:</label>
+            <input type="text" name="images" size="50" placeholder="link link link ... (seperated by spaces)" required/>
+        </div>
+        <div class="input-field">
+            <label>Location:</label>
+            <input type="text" name="location" size="50" placeholder="Location..." required/>
+        </div>
+        <div class="input-field">
+            <label>Name:</label>
+            <input type="text" name="name" size="50" placeholder="Name..." required/>
+        </div>
+        <div class="input-field">
+            <label>Contact Information:</label>
+            <input type="text" name="contact" size="50" placeholder="Phone Number and/or Email..." required/>
+        </div>
+        <div class="input-field">
+            <label>Description:</label>
+            <textarea type="text" name="description" rows="20" placeholder="Description..." required></textarea>
+        </div>
+
+        <button type="submit">Post Advertisement</button>
+    </form>
+</article>
