@@ -36,8 +36,14 @@ app.use(helmet())
 var _DATA = dataUtil.loadData().ads;
 var id = _.max(_DATA, function (element) { return element.id }).id;
 
+/*
 app.listen(3000, function () {
   console.log('Listening on port 3000!');
+});
+*/
+
+app.listen(process.env.PORT || 3000, function () {
+  console.log('Listening!');
 });
 
 app.get('/', function (req, res) {
@@ -113,7 +119,7 @@ app.post('/post', function (req, res) {
 
   _DATA.push(req.body);
   dataUtil.saveData(_DATA);
-  
+
   res.redirect("/");
 });
 
@@ -182,7 +188,7 @@ app.post('/api/post', [
     }
   }
 
-  if(image_error){
+  if (image_error) {
     errors.push(image_error);
   }
 
@@ -198,6 +204,6 @@ app.post('/api/post', [
 });
 
 
-app.get('*', function(req, res){
+app.get('*', function (req, res) {
   return res.render('404');
 });
