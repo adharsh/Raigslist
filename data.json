@@ -61,23 +61,6 @@
             "date": 20200407,
             "display_date": "Apr 7th, 2020",
             "id": 4
-        },
-        {
-            "title": "Selling a Chair",
-            "price": 29.99,
-            "images": [
-                "https://via.placeholder.com/300x300",
-                "https://via.placeholder.com/300x270",
-                "https://via.placeholder.com/300x250"
-            ],
-            "location": "Washington D.C.",
-            "name": "Bob Smith",
-            "contact": "555-555-5555, example@example.com",
-            "description": "<p>This is a very high quality chair that I have bought recently.</p>\n",
-            "id": 5,
-            "preview": "<p>This is a very high quality chair that I have b",
-            "date": 20200411,
-            "display_date": "Apr 11th, 2020"
         }
     ]
 }
