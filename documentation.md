@@ -15,17 +15,17 @@ URL: https://raigslist.herokuapp.com/
 ### 1. Data Format and Storage
 
 Data point fields:
-- `Field 1`: Title               `Type: String`
+- `Field 1`: Title               `Type: String` 
 - `Field 2`: Price              `Type: Number`
 - `Field 3`: Images             `Type: [String]`
 - `Field 4`: Location                `Type: String`
 - `Field 5`: Name       `Type: String`
 - `Field 6`: Contact    `Type: String`
 - `Field 7`: Description    `Type: String`
-- `Field 8`: ID    `Type: Number`
-- `Field 9`: Preview    `Type: String`
-- `Field 10`: Date    `Type: Number`
-- `Field 11`: Display Date    `Type: String`
+- `Field 8`: ID    `Type: Number` (internally used)
+- `Field 9`: Preview    `Type: String` (internally used)
+- `Field 10`: Date    `Type: Number` (internally used)
+- `Field 11`: Display Date    `Type: String` (internally used)
 
 Schema: 
 ```javascript
@@ -89,7 +89,7 @@ GET endpoint route: `/api/getads`
 
 ### 4. Search Data
 
-Search Field: `title`
+Search Field: {{`title`}} - ${{`price`}}
 
 ### 5. Navigation Pages
 
