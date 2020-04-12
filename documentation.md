@@ -1,40 +1,54 @@
 
-# PROJECT NAME
+# Raigslist, Inc, the Craigslist Spinoff
 
 ---
 
-Name: 
+Name: Adharsh Babu
 
-Date: 
+Date: April 11th, 2020
 
-Project Topic: 
+Project Topic: Raigslist, Inc
 
-URL: 
-
----
-
+URL: https://raigslist.herokuapp.com/
+ ---
 
 ### 1. Data Format and Storage
 
 Data point fields:
-- `Field 1`:     ...       `Type: ...`
-- `Field 2`:     ...       `Type: ...`
-- `Field 3`:     ...       `Type: ...`
-- `Field 4`:     ...       `Type: ...`
-- `Field 5`:     ...       `Type: ...`
+- `Field 1`: Title               `Type: String`
+- `Field 2`: Price              `Type: Number`
+- `Field 3`: Images             `Type: [String]`
+- `Field 4`: Location                `Type: String`
+- `Field 5`: Name       `Type: String`
+- `Field 6`: Contact    `Type: String`
+- `Field 7`: Description    `Type: String`
+- `Field 8`: ID    `Type: Number`
+- `Field 9`: Preview    `Type: String`
+- `Field 10`: Date    `Type: Number`
+- `Field 11`: Display Date    `Type: String`
 
 Schema: 
 ```javascript
 {
-   ...
+    "title": String,
+    "price": Number,
+    "images": [String],
+    "location": String,
+    "name": String,
+    "contact": String,
+    "description": String,
+    "id": Number,
+    "preview": String,
+    "date": Number,
+    "display_date": String
 }
 ```
 
 ### 2. Add New Data
 
-HTML form route: `/...`
+HTML form route: `/post`
 
-POST endpoint route: `/api/...`
+POST endpoint route: `/api/post`
 
 Example Node.js POST request to endpoint: 
 ```javascript
@@ -42,13 +56,24 @@ var request = require("request");
 
 var options = { 
     method: 'POST',
-    url: 'http://localhost:3000/api/...',
+    url: 'http://localhost:3000/api/post',
     headers: { 
         'content-type': 'application/x-www-form-urlencoded' 
     },
-    form: { 
-       ...
-    } 
+    form:  {
+          "title": "Selling a Chair",
+          "price": 29.99,
+          "images": [
+              "https://via.placeholder.com/300x300",
+              "https://via.placeholder.com/300x300",
+              "https://via.placeholder.com/300x300"
+          ],
+          "location": "Washington D.C.",
+          "name": "Bob Smith",
+          "contact": "555-555-5555, example@example.com",
+          "description": "This is a very high quality chair that I have bought recently."
+      }
+
 };
 
 request(options, function (error, response, body) {
@@ -60,18 +85,17 @@ request(options, function (error, response, body) {
 
 ### 3. View Data
 
-GET endpoint route: `/api/...`
+GET endpoint route: `/api/getads`
 
 ### 4. Search Data
 
-Search Field: ...
+Search Field: `title`
 
 ### 5. Navigation Pages
 
 Navigation Filters
-1. name -> `  route  `
-2. ... -> `  ...  `
-3. ... -> `  ...  `
-4. ... -> `  ...  `
-5. ... -> `  ...  `
-
+1. Newest -> `/newest`
+2. Oldest -> `/oldest`
+3. Cheapest -> `/cheapest`
+4. Priciest -> `/priciest`
+5. Random -> `/random`

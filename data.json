@@ -61,23 +61,6 @@
             "date": 20200407,
             "display_date": "Apr 7th, 2020",
             "id": 4
-        },
-        {
-            "title": "title",
-            "price": "234.19",
-            "images": [
-                "https://via.placeholder.com/300x100",
-                "https://via.placeholder.com/100x300",
-                "https://via.placeholder.com/10x10"
-            ],
-            "location": "location",
-            "name": "name",
-            "contact": "contact",
-            "description": "<p>description</p>\n",
-            "id": 5,
-            "preview": "<p>description</p>\n",
-            "date": 20200411,
-            "display_date": "Apr 11th, 2020"
         }
     ]
 }

@@ -139,6 +139,7 @@ app.get('/api/getAds', function (req, res) {
             "name": "name",
             "contact": "contact",
             "description": "<p>description</p>\n",
+
             "id": "5",
             "preview": "<p>description</p>\n",
             "date": "20200411",
@@ -152,11 +153,7 @@ app.post('/api/post', [
   check('location').trim().escape().notEmpty().withMessage("Location is required"),
   check('name').trim().escape().notEmpty().withMessage("Name is required"),
   check('contact').trim().escape().notEmpty().withMessage("Contact is required"),
-  check('description').trim().escape().notEmpty().withMessage("Description is required"),
-  check('id').isInt(),
-  check('preview').trim().escape().notEmpty().withMessage("Preview is required"),
-  check('date').isInt(),
-  check('display_date').trim().escape().notEmpty().withMessage("display_date is required"),
+  check('description').trim().escape().notEmpty().withMessage("Description is required")
 ], (req, res) => {
   errors = validationResult(req);
   errors = errors.array();
@@ -196,11 +193,20 @@ app.post('/api/post', [
     return res.status(422).json({ errors: errors });
   }
 
-  // res.send(req.body.images)
-  // _DATA.push(req.body);
-  // dataUtil.saveData(_DATA);
-  res.send(req.body)
-  // res.send("Success!")
+  
+  var body = req.body;
+  body.id = ++id;
+
+  body.images = body.images.trim().split(/\s+/);
+  body.description = marked(body.description);
+  body.preview = body.description.substring(0, 50);
+
+  var date = moment();
+  body.date = parseInt(date.format('YYYYMMDD'));
+  body.display_date = date.format('MMM Do, YYYY');
+
+  _DATA.push(req.body);
+  dataUtil.saveData(_DATA);
 });
 
 
