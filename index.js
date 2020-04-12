@@ -126,26 +126,6 @@ app.post('/post', function (req, res) {
 app.get('/api/getAds', function (req, res) {
   res.json(_DATA);
 })
-/*
- {
-            "title": "title",
-            "price": "234.19",
-            "images": [
-                "https://via.placeholder.com/300x100",
-                "https://via.placeholder.com/100x300",
-                "https://via.placeholder.com/10x10"
-            ],
-            "location": "location",
-            "name": "name",
-            "contact": "contact",
-            "description": "<p>description</p>\n",
-
-            "id": "5",
-            "preview": "<p>description</p>\n",
-            "date": "20200411",
-            "display_date": "Apr 11th, 2020"
-        }
-*/
 
 app.post('/api/post', [
   check('title').trim().escape().notEmpty().withMessage("Title is required"),
@@ -159,8 +139,16 @@ app.post('/api/post', [
   errors = errors.array();
 
   var image_error;
-  var images = req.body.images;
-  if (images.length == 0) {
+  var images = [];
+  
+  var num_images = 0;
+  for(var key in req.body){
+      if(key.includes("image")){
+          num_images++;
+      }
+  }
+
+  if (num_images == 0) {
     image_error =
     {
       "value": images,
@@ -168,13 +156,12 @@ app.post('/api/post', [
       "param": "images",
       "location": "body"
     };
-  }
-  else {
+  } else {
     var valid_images = true;
-    for (var i = 0; i < images.length; i++) {
-      if (images[i].split(/\s+/).length != 1) {
-        image_error =
-        {
+    for (var i = 0; i < num_images; i++) {
+      var ele = req.body["images[" + i.toString() + "]"];
+      if (ele.split(/\s+/).length != 1) {
+        image_error = {
           "value": images,
           "msg": "Invalid values",
           "param": "images",
@@ -182,6 +169,8 @@ app.post('/api/post', [
         };
         break;
       }
+
+      images.push(ele);
     }
   }
 
@@ -194,19 +183,27 @@ app.post('/api/post', [
   }
 
   
-  var body = req.body;
-  body.id = ++id;
-
-  body.images = body.images.trim().split(/\s+/);
-  body.description = marked(body.description);
-  body.preview = body.description.substring(0, 50);
+  var data = {};
+  data.title = req.body.title;
+  data.price = parseFloat(req.body.price);
+  data.images = images;
+  data.location = req.body.location;
+  data.name = req.body.name;
+  data.contact = req.body.contact;
+  data.description = marked(req.body.description);
+  
+  data.id = ++id;
+  data.preview = data.description.substring(0, 50);
 
   var date = moment();
-  body.date = parseInt(date.format('YYYYMMDD'));
-  body.display_date = date.format('MMM Do, YYYY');
+  data.date = parseInt(date.format('YYYYMMDD'));
+  data.display_date = date.format('MMM Do, YYYY');
+  
 
-  _DATA.push(req.body);
+  _DATA.push(data);
   dataUtil.saveData(_DATA);
+
+  res.send("Success!")
 });
 
 

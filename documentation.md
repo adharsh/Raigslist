@@ -65,8 +65,8 @@ var options = {
           "price": 29.99,
           "images": [
               "https://via.placeholder.com/300x300",
-              "https://via.placeholder.com/300x300",
-              "https://via.placeholder.com/300x300"
+              "https://via.placeholder.com/300x270",
+              "https://via.placeholder.com/300x250"
           ],
           "location": "Washington D.C.",
           "name": "Bob Smith",
@@ -99,3 +99,10 @@ Navigation Filters
 3. Cheapest -> `/cheapest`
 4. Priciest -> `/priciest`
 5. Random -> `/random`
+
+Additionally, each individual post can be accessed through:
+`/ad/:id`  
+(`id` starts from `1` to the number of posts present)
+
+### Code Repo:
+- https://github.com/adharsh/Raigslist
