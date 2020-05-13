@@ -137,3 +137,10 @@ button {
 #description_container {
     padding: 10px 0 10% 0;
 }
+
+
+.ascii-art {
+    font-family: monospace;
+    font-size: 200%;
+    white-space: pre;
+}

@@ -14,7 +14,7 @@ URL: https://raigslist.herokuapp.com/
 
 ### 1. Data Format and Storage
 
-Data point fields:
+All data point fields:
 - `Field 1`: Title               `Type: String` 
 - `Field 2`: Price              `Type: Number`
 - `Field 3`: Images             `Type: [String]`
@@ -27,7 +27,7 @@ Data point fields:
 - `Field 10`: Date    `Type: Number` (internally used)
 - `Field 11`: Display Date    `Type: String` (internally used)
 
-Schema: 
+External Schema: 
 ```javascript
 {
     "title": String,
@@ -37,7 +37,14 @@ Schema:
     "name": String,
     "contact": String,
     "description": String,
-    "id": Number,
+    "internal_id": Number
+}
+```
+
+Internal Schema: 
+```javascript
+{
+    "internal_id": Number,
     "preview": String,
     "date": Number,
     "display_date": String
@@ -94,15 +101,33 @@ Search Field: {{`title`}} - ${{`price`}}
 ### 5. Navigation Pages
 
 Navigation Filters
-1. Newest -> `/newest`
-2. Oldest -> `/oldest`
-3. Cheapest -> `/cheapest`
-4. Priciest -> `/priciest`
-5. Random -> `/random`
+1. Home -> `/`
+2. About -> `/about`
+3. Newest -> `/newest`
+4. Oldest -> `/oldest`
+5. Cheapest -> `/cheapest`
+6. Priciest -> `/priciest`
+7. Random -> `/random`
+8. Post Advertisement -> `/post`
 
 Additionally, each individual post can be accessed through:
 `/ad/:id`  
 (`id` starts from `1` to the number of posts present)
+
+### 6. Module
+The schemas are stored in the `Data.js` file located in `./models/Data.js`. `Data` is exported and contains the two schemas, which are `External` and `Internal`. They are acessed by `Data.External` and `Data.Internal`.
+
+### 6. Delete Data
+DELETE endpoint route: `/delete/all`
+This will delete all advertisements. This will only be used in the event when the government intervenes in our company's moral black market operations.
+
+DELETE endpoint route: `/delete/:id`
+This will delete individual advertisements by id.
+
+### 7. Additional NPM Packages
+* `cows` was used to display ascii art in the 404 page.
+* `superb` was used to display adjectives to describe the ascii art in the 404 page.
+* `helmet` is very nice package that automatically adds security to your web application.
 
 ### Code Repo:
 - https://github.com/adharsh/Raigslist

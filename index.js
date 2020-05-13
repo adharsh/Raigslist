@@ -9,13 +9,26 @@ var bodyParser = require('body-parser');
 var logger = require('morgan');
 var exphbs = require('express-handlebars');
 
-var dataUtil = require("./data-util");
 var _ = require("underscore");
 var moment = require('moment');
 var marked = require('marked');
 var helmet = require('helmet')
+const cows = require('cows');
+const superb = require('superb');
+
 const { check, validationResult } = require('express-validator');
 
+var mongoose = require('mongoose');
+mongoose.Promise = global.Promise;
+var dotenv = require('dotenv'); //allows you to use dotenv file
+var Data = require('./models/Data');
+dotenv.config();
+console.log(process.env.MONGODB);
+mongoose.connect(process.env.MONGODB);
+mongoose.connection.on('error', function () {
+  console.log('MongoDB Connection Error. Please make sure that MongoDB is running.');
+  process.exit(1);
+});
 
 var app = express();
 
@@ -33,8 +46,13 @@ app.use(helmet())
  * endpoints for the API, and 5 others.
  */
 
-var _DATA = dataUtil.loadData().ads;
-var id = _.max(_DATA, function (element) { return element.id }).id;
+// var id = _.max(DATA, function (element) { return element.id }).id;
+var id;
+Data.Internal.count({}, function (err, count) {
+  if (err) throw err;
+  id = count;
+  // console.log("id: " + id)
+});
 
 /*
 app.listen(3000, function () {
@@ -47,58 +65,255 @@ app.listen(process.env.PORT || 3000, function () {
 });
 
 app.get('/', function (req, res) {
-  res.render('home', {
-    ads: _DATA,
-    search: true
+
+  Data.External.find({}, function (err, external) {
+    if (err) throw err;
+    Data.Internal.find({}, function (err, internal) {
+      if (err) throw err;
+
+      var ads = external.map((o, i) => (
+        {
+          //time: o.key, lat: o.value, lon: lon[i].value,
+
+          title: o.title,
+          price: o.price,
+          images: o.images,
+          location: o.location,
+          name: o.name,
+          contact: o.contact,
+          description: o.description,
+          id: o.internal_id,
+
+          preview: internal[i].preview,
+          date: internal[i].date,
+          display_date: internal[i].display_date,
+        }));
+
+      res.render('home', {
+        ads: ads,
+        search: true
+      });
+
+    });
   });
+
+  // res.render('home', {
+  //   ads: DATA,
+  //   search: true
+  // });
 })
 
 app.get('/ad/:id', function (req, res) {
   var _id = parseInt(req.params.id);
-  var ad = _.findWhere(_DATA, { id: _id });
-  if (!ad) return res.render('404');
-  res.render('ad', ad);
+
+  Data.External.find({}, function (err, external) {
+    if (err) throw err;
+    Data.Internal.find({}, function (err, internal) {
+      if (err) throw err;
+
+      var ads = external.map((o, i) => (
+        {
+          //time: o.key, lat: o.value, lon: lon[i].value,
+
+          title: o.title,
+          price: o.price,
+          images: o.images,
+          location: o.location,
+          name: o.name,
+          contact: o.contact,
+          description: o.description,
+          id: o.internal_id,
+
+          preview: internal[i].preview,
+          date: internal[i].date,
+          display_date: internal[i].display_date,
+        }));
+
+      var ad = _.findWhere(ads, { id: _id });
+      if (!ad) return res.render('404');
+      res.render('ad', ad);
+
+    });
+  });
+
 });
 
 app.get('/cheapest', function (req, res) {
-  _ads = _.sortBy(_DATA, function (element) {
-    return element.price;
+
+  Data.External.find({}, function (err, external) {
+    if (err) throw err;
+    Data.Internal.find({}, function (err, internal) {
+      if (err) throw err;
+
+      var ads = external.map((o, i) => (
+        {
+          //time: o.key, lat: o.value, lon: lon[i].value,
+
+          title: o.title,
+          price: o.price,
+          images: o.images,
+          location: o.location,
+          name: o.name,
+          contact: o.contact,
+          description: o.description,
+          id: o.internal_id,
+
+          preview: internal[i].preview,
+          date: internal[i].date,
+          display_date: internal[i].display_date,
+        }));
+
+      _ads = _.sortBy(ads, function (element) {
+        return element.price;
+      });
+      res.render('home', {
+        ads: _ads
+      });
+
+    });
   });
-  res.render('home', {
-    ads: _ads
-  });
+
 });
 
 app.get('/priciest', function (req, res) {
-  _ads = _.sortBy(_DATA, function (element) {
-    return element.price * -1;
+  Data.External.find({}, function (err, external) {
+    if (err) throw err;
+    Data.Internal.find({}, function (err, internal) {
+      if (err) throw err;
+
+      var ads = external.map((o, i) => (
+        {
+          //time: o.key, lat: o.value, lon: lon[i].value,
+
+          title: o.title,
+          price: o.price,
+          images: o.images,
+          location: o.location,
+          name: o.name,
+          contact: o.contact,
+          description: o.description,
+          id: o.internal_id,
+
+          preview: internal[i].preview,
+          date: internal[i].date,
+          display_date: internal[i].display_date,
+        }));
+
+      _ads = _.sortBy(ads, function (element) {
+        return element.price * -1;
+      });
+      res.render('home', {
+        ads: _ads
+      });
+
+    });
   });
-  res.render('home', {
-    ads: _ads
-  });
+
+
 });
 
 app.get('/newest', function (req, res) {
-  _ads = _.sortBy(_DATA, function (element) {
-    return element.date * -1;
-  });
-  res.render('home', {
-    ads: _ads
+  Data.External.find({}, function (err, external) {
+    if (err) throw err;
+    Data.Internal.find({}, function (err, internal) {
+      if (err) throw err;
+
+      var ads = external.map((o, i) => (
+        {
+          //time: o.key, lat: o.value, lon: lon[i].value,
+
+          title: o.title,
+          price: o.price,
+          images: o.images,
+          location: o.location,
+          name: o.name,
+          contact: o.contact,
+          description: o.description,
+          id: o.internal_id,
+
+          preview: internal[i].preview,
+          date: internal[i].date,
+          display_date: internal[i].display_date,
+        }));
+
+      _ads = _.sortBy(ads, function (element) {
+        return element.date * -1;
+      });
+      res.render('home', {
+        ads: _ads
+      });
+
+    });
   });
 });
 
 app.get('/oldest', function (req, res) {
-  _ads = _.sortBy(_DATA, function (element) {
-    return element.date;
+  Data.External.find({}, function (err, external) {
+    if (err) throw err;
+    Data.Internal.find({}, function (err, internal) {
+      if (err) throw err;
+
+      var ads = external.map((o, i) => (
+        {
+          //time: o.key, lat: o.value, lon: lon[i].value,
+
+          title: o.title,
+          price: o.price,
+          images: o.images,
+          location: o.location,
+          name: o.name,
+          contact: o.contact,
+          description: o.description,
+          id: o.internal_id,
+
+          preview: internal[i].preview,
+          date: internal[i].date,
+          display_date: internal[i].display_date,
+        }));
+
+      _ads = _.sortBy(ads, function (element) {
+        return element.date;
+      });
+      res.render('home', {
+        ads: _ads
+      });
+
+    });
   });
-  res.render('home', {
-    ads: _ads
-  });
+
 });
 
 app.get('/random', function (req, res) {
-  var _ad = _DATA[Math.floor(Math.random() * _DATA.length)];
-  res.render('ad', _ad);
+
+  Data.External.find({}, function (err, external) {
+    if (err) throw err;
+    Data.Internal.find({}, function (err, internal) {
+      if (err) throw err;
+
+      var ads = external.map((o, i) => (
+        {
+          //time: o.key, lat: o.value, lon: lon[i].value,
+
+          title: o.title,
+          price: o.price,
+          images: o.images,
+          location: o.location,
+          name: o.name,
+          contact: o.contact,
+          description: o.description,
+          id: o.internal_id,
+
+          preview: internal[i].preview,
+          date: internal[i].date,
+          display_date: internal[i].display_date,
+        }));
+
+      var _ad = ads[Math.floor(Math.random() * ads.length)];
+      res.render('ad', _ad);
+
+    });
+  });
+
 });
 
 app.get("/post", function (req, res) {
@@ -107,6 +322,7 @@ app.get("/post", function (req, res) {
 
 app.post('/post', function (req, res) {
   var body = req.body;
+
   body.id = ++id;
 
   body.images = body.images.trim().split(/\s+/);
@@ -117,14 +333,69 @@ app.post('/post', function (req, res) {
   body.date = parseInt(date.format('YYYYMMDD'));
   body.display_date = date.format('MMM Do, YYYY');
 
-  _DATA.push(req.body);
-  dataUtil.saveData(_DATA);
+  var external = new Data.External({
+    title: body.title,
+    price: parseFloat(body.price),
+    images: body.images,
+    location: body.location,
+    name: body.name,
+    contact: body.contact,
+    description: body.description,
+    internal_id: parseInt(body.id),
+  });
 
-  res.redirect("/");
+  var internal = new Data.Internal({
+    internal_id: parseInt(body.id),
+    preview: body.preview,
+    date: parseInt(body.date),
+    display_date: body.display_date,
+  });
+
+  // Save movie to database
+
+  external.save(function (err) {
+    if (err) throw err;
+
+    internal.save(function (err) {
+      if (err) throw err;
+      return res.redirect("/");
+    })
+
+  })
+
+  // DATA.push(req.body);
+  // dataUtil.saveData(DATA);
 });
 
 app.get('/api/getAds', function (req, res) {
-  res.json(_DATA);
+  Data.External.find({}, function (err, external) {
+    if (err) throw err;
+    Data.Internal.find({}, function (err, internal) {
+      if (err) throw err;
+
+      var ads = external.map((o, i) => (
+        {
+          //time: o.key, lat: o.value, lon: lon[i].value,
+
+          title: o.title,
+          price: o.price,
+          images: o.images,
+          location: o.location,
+          name: o.name,
+          contact: o.contact,
+          description: o.description,
+          id: o.internal_id,
+
+          preview: internal[i].preview,
+          date: internal[i].date,
+          display_date: internal[i].display_date,
+        }));
+
+      res.json(ads);
+
+    });
+  });
+
 })
 
 app.post('/api/post', [
@@ -140,12 +411,12 @@ app.post('/api/post', [
 
   var image_error;
   var images = [];
-  
+
   var num_images = 0;
-  for(var key in req.body){
-      if(key.includes("image")){
-          num_images++;
-      }
+  for (var key in req.body) {
+    if (key.includes("image")) {
+      num_images++;
+    }
   }
 
   if (num_images == 0) {
@@ -182,7 +453,7 @@ app.post('/api/post', [
     return res.status(422).json({ errors: errors });
   }
 
-  
+
   var data = {};
   data.title = req.body.title;
   data.price = parseFloat(req.body.price);
@@ -191,22 +462,94 @@ app.post('/api/post', [
   data.name = req.body.name;
   data.contact = req.body.contact;
   data.description = marked(req.body.description);
-  
+
   data.id = ++id;
   data.preview = data.description.substring(0, 50);
 
   var date = moment();
   data.date = parseInt(date.format('YYYYMMDD'));
   data.display_date = date.format('MMM Do, YYYY');
-  
 
-  _DATA.push(data);
-  dataUtil.saveData(_DATA);
+  var body = data;
+
+  //DATA.push(data);
+  //dataUtil.saveData(DATA);
+
+  var external = new Data.External({
+    title: body.title,
+    price: parseFloat(body.price),
+    images: body.images,
+    location: body.location,
+    name: body.name,
+    contact: body.contact,
+    description: body.description,
+    internal_id: parseInt(body.id),
+  });
+
+  var internal = new Data.Internal({
+    internal_id: parseInt(body.id),
+    preview: body.preview,
+    date: parseInt(body.date),
+    display_date: body.display_date,
+  });
+
+  // Save movie to database
+
+  external.save(function (err) {
+    if (err) throw err;
+
+    internal.save(function (err) {
+      if (err) throw err;
+      return res.redirect("/");
+    })
+
+  })
 
   res.send("Success!")
 });
 
 
+app.delete('/delete/all', function (req, res) {
+
+  Data.External.remove({}, function (err, external) {
+    if (err) throw err;
+    Data.Internal.remove({}, function (err, internal) {
+      if (err) throw err;
+      res.send('Everything is deleted!')
+
+    });
+  });
+
+});
+
+
+app.delete('/delete/:id', function (req, res) {
+  var _id = parseInt(req.params.id);
+
+  Data.External.remove({internal_id: _id}, function (err, external) {
+    if (err) throw err;
+    Data.Internal.remove({internal_id: _id}, function (err, internal) {
+      if (err) throw err;
+      res.send('Ad ' + _id + ' is deleted!')
+    });
+  });
+
+});
+
+
+app.get('/about', function (req, res) {
+
+  return res.render('about');
+  
+});
+
 app.get('*', function (req, res) {
-  return res.render('404');
+
+  var cowList = cows();
+  var cow = cowList[Math.floor(Math.random() * cowList.length)];
+  var adj = superb.random();
+  return res.render('404', {
+    cow: cow,
+    adj: adj
+  });
 });

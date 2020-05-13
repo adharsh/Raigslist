@@ -15,11 +15,15 @@
         "express": "^4.17.1",
         "express-handlebars": "^3.1.0",
         "express-validator": "^6.4.0",
-        "helmet": "*",
         "marked": "^0.8.2",
         "moment": "^2.24.0",
         "morgan": "^1.10.0",
         "request": "^2.88.2",
-        "underscore": "^1.10.2"
+        "underscore": "^1.10.2",
+        "dotenv": "^8.2.0",
+        "mongoose": "^5.9.7",
+        "helmet": "latest",
+        "cows": "latest",
+        "superb": "latest"
     }
 }
