@@ -124,6 +124,9 @@ This will delete all advertisements. This will only be used in the event when th
 DELETE endpoint route: `/delete/:id`
 This will delete individual advertisements by id.
 
+### 6. 404 Page
+If anything other than the endpoints described above are entered, the 404 page will be shown greeting you with a cow message.
+
 ### 7. Additional NPM Packages
 * `cows` was used to display ascii art in the 404 page.
 * `superb` was used to display adjectives to describe the ascii art in the 404 page.
