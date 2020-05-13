@@ -130,7 +130,15 @@ app.get('/ad/:id', function (req, res) {
         }));
 
       var ad = _.findWhere(ads, { id: _id });
-      if (!ad) return res.render('404');
+      if (!ad) {
+        var cowList = cows();
+        var cow = cowList[Math.floor(Math.random() * cowList.length)];
+        var adj = superb.random();
+        return res.render('404', {
+          cow: cow,
+          adj: adj
+        });
+      }
       res.render('ad', ad);
 
     });
@@ -526,9 +534,9 @@ app.delete('/delete/all', function (req, res) {
 app.delete('/delete/:id', function (req, res) {
   var _id = parseInt(req.params.id);
 
-  Data.External.remove({internal_id: _id}, function (err, external) {
+  Data.External.remove({ internal_id: _id }, function (err, external) {
     if (err) throw err;
-    Data.Internal.remove({internal_id: _id}, function (err, internal) {
+    Data.Internal.remove({ internal_id: _id }, function (err, internal) {
       if (err) throw err;
       res.send('Ad ' + _id + ' is deleted!')
     });
@@ -540,11 +548,10 @@ app.delete('/delete/:id', function (req, res) {
 app.get('/about', function (req, res) {
 
   return res.render('about');
-  
+
 });
 
 app.get('*', function (req, res) {
-
   var cowList = cows();
   var cow = cowList[Math.floor(Math.random() * cowList.length)];
   var adj = superb.random();
